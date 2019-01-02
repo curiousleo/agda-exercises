@@ -1,0 +1,11 @@
+language: generic
+
+services:
+- docker
+
+install:
+- docker pull scottfleischman/agda:2.5.4.2
+
+script:
+- docker run --volume="$(pwd):/code" --workdir=/code scottfleischman/agda:2.5.4.2 agda --html --html-dir=html-test \*.agda
+- git -c core.fileMode=false diff --no-index html/ html-test/
