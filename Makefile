@@ -1,0 +1,22 @@
+AGDA=agda
+AGDA_DIR=agda
+HTML_DIR=html
+AFLAGS=-i./$(AGDA_DIR)
+ROOT=$(AGDA_DIR)/Index.agda
+SOURCES=$(shell find $(AGDA_DIR)/ -maxdepth 1 -name '*.agda' -and -not -wholename $(ROOT))
+
+all: $(ROOT) $(HTML_DIR)
+
+$(ROOT): $(ROOT).tmpl $(SOURCES)
+	cp $@.tmpl $@
+	echo $(SOURCES) | xargs basename --suffix=.agda | xargs -I '{}' echo 'import {}' >> $@
+
+$(HTML_DIR): $(ROOT)
+	$(AGDA) $(AFLAGS) --html $(ROOT) --html-dir $(HTML_DIR)
+
+clean:
+	rm -rf $(HTML_DIR)
+	rm $(ROOT)
+	find $(AGDA_DIR)/ -name '*.agdai' -delete
+
+.PHONY: all clean
