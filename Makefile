@@ -5,7 +5,7 @@ AFLAGS=-i./$(AGDA_DIR)
 ROOT=$(AGDA_DIR)/Index.agda
 SOURCES=$(shell find $(AGDA_DIR)/ -maxdepth 1 -name '*.agda' -and -not -wholename $(ROOT))
 
-all: $(ROOT) $(HTML_DIR)
+all: clean $(ROOT) $(HTML_DIR)
 
 $(ROOT): $(ROOT).tmpl $(SOURCES)
 	cp $@.tmpl $@

@@ -7,5 +7,5 @@ install:
 - docker pull scottfleischman/agda:2.5.4.2
 
 script:
-- docker run --volume="$(pwd):/code" --workdir=/code scottfleischman/agda:2.5.4.2 make -B all
+- ./run.sh make -B all
 - git -c core.fileMode=false diff html/
