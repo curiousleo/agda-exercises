@@ -32,26 +32,13 @@ record Σ {A : Set} (P : A → Set) : Set where
 
 \end{code}
 
-Identity
---------
+Identity and paths
+------------------
 
 \begin{code}
 
 data Id {A : Set} : A → A → Set where
   refl : (a : A) → Id a a
-
-sym : {A : Set} {a b : A} → Id a b → Id b a
-sym (refl a) = refl a
-
-trans : {A : Set} {a b : A} → Id a b → {c : A} → Id b c → Id a c
-trans (refl a) id-b-c = id-b-c
-
-\end{code}
-
-Paths
------
-
-\begin{code}
 
 infixl 20 _∙_
 _∙_ : {A : Set} {a b c : A} → Id b c → Id a b → Id a c
@@ -61,9 +48,9 @@ infix 30 _⁻¹
 _⁻¹ : {A : Set} {a b : A} → Id a b → Id b a
 refl a ⁻¹ = refl a
 
-id-left-inv : {A : Set} {a b : A} (p : Id a b)
-            → Id (p ∙ p ⁻¹) (refl b)
-id-left-inv (refl a) = refl (refl a)
+id-inv : {A : Set} {a b : A} (p : Id a b)
+       → Id (p ∙ p ⁻¹) (refl b)
+id-inv (refl a) = refl (refl a)
 
 transport : {A : Set} {a b : A} → Id a b → {B : A → Set} → B a → B b
 transport (refl a) ba = ba
@@ -121,10 +108,10 @@ prop-is-set {A} A-is-prop {a} = A-is-set
     g = A-is-prop a
 
     h : {b c : A} (p : Id b c) → Id (g c ∙ (g b) ⁻¹) p
-    h (refl b) = id-left-inv (g b)
+    h (refl b) = id-inv (g b)
 
     A-is-set : is-set A
-    A-is-set p q = trans (sym (h p)) (h q)
+    A-is-set p q = h q ∙ (h p) ⁻¹
 
 proof₂ : {A : Set}
        → ((a b : A) → Id a b)
