@@ -1,7 +1,9 @@
 AGDA=agda
+AFLAGS=-i./$(AGDA_DIR)
+
 AGDA_DIR=agda
 HTML_DIR=html
-AFLAGS=-i./$(AGDA_DIR)
+
 ROOT=$(AGDA_DIR)/Index.agda
 SOURCES=$(shell find $(AGDA_DIR)/ -maxdepth 1 -name '*.agda' -and -not -wholename $(ROOT))
 
