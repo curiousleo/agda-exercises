@@ -1,0 +1,11 @@
+language: generic
+
+services:
+- docker
+
+install:
+- docker pull scottfleischman/agda:2.5.4.2
+
+script:
+- ./run.sh make -B all
+- git -c core.fileMode=false diff -- html/
