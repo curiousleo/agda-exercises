@@ -14,6 +14,7 @@ $(ROOT): $(ROOT).tmpl $(SOURCES)
 	echo $(SOURCES) | \
 		xargs basename --suffix=.agda | \
 		xargs basename --suffix=.lagda | \
+		sort | \
 		xargs -I '{}' echo 'import {}' >> $@
 
 $(HTML_DIR): $(ROOT)
