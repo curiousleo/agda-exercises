@@ -8,4 +8,4 @@ install:
 
 script:
 - ./run.sh make -B all
-- git -c core.fileMode=false diff -- html/
+- git -c core.fileMode=false diff --exit-code -- html/
